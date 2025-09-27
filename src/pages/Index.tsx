@@ -5,6 +5,10 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
+import MusicPlayer from '@/components/MusicPlayer';
+import SearchBar from '@/components/SearchBar';
+import AnalyticsDashboard from '@/components/AnalyticsDashboard';
+import AIChat from '@/components/AIChat';
 
 interface DeFiPool {
   name: string;
@@ -84,13 +88,17 @@ const Index = () => {
               <h1 className="text-xl font-bold text-gradient">CyberSpace</h1>
             </div>
             
-            <div className="hidden md:flex items-center gap-6">
-              {['Dashboard', 'DeFi', 'NFT', 'DAO', 'Wallet'].map((item) => (
+            <div className="hidden md:flex items-center gap-4">
+              <SearchBar />
+            </div>
+            
+            <div className="hidden lg:flex items-center gap-6">
+              {['Dashboard', 'Music', 'Analytics', 'AI Chat', 'DeFi'].map((item) => (
                 <button
                   key={item}
-                  onClick={() => setActiveTab(item.toLowerCase())}
-                  className={`px-4 py-2 rounded-lg transition-all ${
-                    activeTab === item.toLowerCase()
+                  onClick={() => setActiveTab(item.toLowerCase().replace(' ', ''))}
+                  className={`px-4 py-2 rounded-lg transition-all icon-glow ${
+                    activeTab === item.toLowerCase().replace(' ', '')
                       ? 'bg-primary text-primary-foreground shadow-neon'
                       : 'hover:bg-accent/50'
                   }`}
@@ -106,7 +114,7 @@ const Index = () => {
               </Badge>
               <Button
                 onClick={() => setWalletConnected(!walletConnected)}
-                className={`transition-all ${
+                className={`transition-all icon-glow ${
                   walletConnected 
                     ? 'bg-green-600 hover:bg-green-700' 
                     : 'bg-gradient-to-r from-neon-violet to-neon-cyan hover:opacity-90 shadow-neon'
@@ -125,10 +133,10 @@ const Index = () => {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 glass-dark">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+            <TabsTrigger value="music">Music</TabsTrigger>
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="aichat">AI Chat</TabsTrigger>
             <TabsTrigger value="defi">DeFi</TabsTrigger>
-            <TabsTrigger value="nft">NFT</TabsTrigger>
-            <TabsTrigger value="dao">DAO</TabsTrigger>
-            <TabsTrigger value="wallet">Wallet</TabsTrigger>
           </TabsList>
 
           {/* Dashboard Tab */}
@@ -249,6 +257,21 @@ const Index = () => {
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+
+          {/* Music Tab */}
+          <TabsContent value="music" className="space-y-6 mt-6 animate-fade-in">
+            <MusicPlayer />
+          </TabsContent>
+
+          {/* Analytics Tab */}
+          <TabsContent value="analytics" className="space-y-6 mt-6 animate-fade-in">
+            <AnalyticsDashboard />
+          </TabsContent>
+
+          {/* AI Chat Tab */}
+          <TabsContent value="aichat" className="space-y-6 mt-6 animate-fade-in">
+            <AIChat />
           </TabsContent>
 
           {/* DeFi Tab */}
